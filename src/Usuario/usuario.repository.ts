@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -27,5 +28,12 @@ export class UsuarioRepository {
 
   async buscarPorId(id) {
     return this.usuario.find((user) => user.id === id);
+  }
+
+  async existeComEmail(email: string) {
+    const possivelUsuario = this.usuario.find(
+      usuario => usuario.email === email
+    );
+    return possivelUsuario !== undefined;
   }
 }

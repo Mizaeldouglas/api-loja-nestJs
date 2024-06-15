@@ -1,9 +1,13 @@
-import { IsDateString, IsNotEmpty } from "class-validator";
+import { IsDateString, IsNotEmpty, IsUUID } from "class-validator";
 import { ImagensProdutosDto } from "./imagens-produtos.dto";
 import { CaracteristicasProdutosDto } from "./caracteristicas-produtos.dto";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateProdutosDto {
+  @IsUUID(undefined, { message: "ID de usuário inválido" })
+  @ApiProperty({ example: "1" })
+  usuarioId: string;
+
   @ApiProperty({ example: "Produto 1" })
   @IsNotEmpty({ message: "Nome é obrigatório" })
   nome: string;
