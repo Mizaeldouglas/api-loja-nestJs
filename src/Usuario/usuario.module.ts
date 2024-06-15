@@ -2,11 +2,10 @@
 import { Module } from "@nestjs/common";
 import { UsuarioController } from "./usuario.controller";
 import { EmailEhUnicoValidator } from "./valitadion/is-email-unique.validation";
+import { UsuarioRepository } from "./usuario.repository";
 
 @Module({
-  imports: [],
   controllers: [UsuarioController],
-  providers: [EmailEhUnicoValidator],
-  exports: [],
+  providers: [UsuarioRepository, EmailEhUnicoValidator],
 })
 export class UsuarioModule { }

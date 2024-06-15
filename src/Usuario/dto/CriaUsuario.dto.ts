@@ -1,9 +1,13 @@
-import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
-
+import { IsEmail, IsNotEmpty, IsUUID, MinLength } from "class-validator";
+import { v4 as uuidv4 } from "uuid";
 import { ApiProperty } from "@nestjs/swagger";
 import { EmailEhUnico } from "../valitadion/is-email-unique.validation";
 
 export class CriaUsuarioDto {
+  @IsNotEmpty({ message: "Id é obrigatório" })
+  @IsUUID(undefined, { message: "Id deve ser um UUID válido" })
+  id: string = uuidv4();
+
   @IsNotEmpty({ message: "Nome é obrigatório" })
   @ApiProperty({ example: "Nome do usuário" })
   nome: string;

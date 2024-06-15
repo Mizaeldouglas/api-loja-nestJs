@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Post, Get } from "@nestjs/common";
-import { UsuarioRepository } from "./usuario.repository";
 import { CriaUsuarioDto } from "./dto/CriaUsuario.dto";
 import { ApiTags } from '@nestjs/swagger';
+import { UsuarioRepository } from "./usuario.repository";
 
 @ApiTags('usuarios')
 @Controller("usuarios")
