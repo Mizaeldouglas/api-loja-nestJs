@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Module } from "@nestjs/common";
-import { UsuarioController } from "./usuario.controller";
+import { ProdutosController } from "./produtos.controller";
 
 @Module({
   imports: [],
-  controllers: [UsuarioController],
+  controllers: [ProdutosController],
   providers: [],
   exports: [],
 })
-export class UsuarioModule { }
+export class ProdutoModule { }

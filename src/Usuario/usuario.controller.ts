@@ -1,10 +1,13 @@
-import { Body, Controller, Post, Get } from '@nestjs/common';
-import { UsuarioRepository } from './usuario.repository';
-import { CriaUsuarioDto } from './dto/CriaUsuario.dto';
+/* eslint-disable prettier/prettier */
+import { Body, Controller, Post, Get } from "@nestjs/common";
+import { UsuarioRepository } from "./usuario.repository";
+import { CriaUsuarioDto } from "./dto/CriaUsuario.dto";
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('/usuarios')
+@ApiTags('usuarios')
+@Controller("usuarios")
 export class UsuarioController {
-  constructor(private usuarioRepository: UsuarioRepository) {}
+  constructor(private usuarioRepository: UsuarioRepository) { }
 
   @Post()
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDto) {
