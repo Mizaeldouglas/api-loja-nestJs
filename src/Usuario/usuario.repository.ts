@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from "@nestjs/common";
+import { UsuarioEntity } from "./usuario.entity";
 
 @Injectable()
 export class UsuarioRepository {
-  private usuario = [];
+  private usuario: UsuarioEntity[] = [];
 
-  async salvar(usuario) {
+  async salvar(usuario: UsuarioEntity) {
     this.usuario.push(usuario);
   }
 
@@ -13,7 +14,7 @@ export class UsuarioRepository {
     return this.usuario;
   }
 
-  async deletar(usuario) {
+  async deletar(usuario: UsuarioEntity) {
     this.usuario = this.usuario.filter((user) => user !== usuario);
   }
 
