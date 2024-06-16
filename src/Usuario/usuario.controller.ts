@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post, Get } from "@nestjs/common";
+import { Body, Controller, Post, Get, Put, Param, Delete } from "@nestjs/common";
 import { CriaUsuarioDto } from "./dto/CriaUsuario.dto";
 import { ApiTags } from '@nestjs/swagger';
 import { UsuarioRepository } from "./usuario.repository";
 import { UsuarioEntity } from "./usuario.entity";
 import { v4 as uuidv4 } from 'uuid';
 import { ListaUsuarioDto } from "./dto/lista-usuario.dto";
+import { updateUsuarioDto } from "./dto/updateUsuario.dto";
 
 @ApiTags('usuarios')
 @Controller("usuarios")
@@ -33,5 +34,32 @@ export class UsuarioController {
       usuario.id,
       usuario.nome
     ));
+  }
+
+  @Get(':id')
+  async buscarUsuarioPorId(@Param('id') id: string) {
+    const usuario = await this.usuarioRepository.buscarPorId(id);
+
+    return new ListaUsuarioDto(usuario.id, usuario.nome);
+  }
+
+  @Put('/:id')
+  async atualizarUsuario(@Body() dadosDoUsuario: updateUsuarioDto, @Param('id') id: string) {
+    const usuario = await this.usuarioRepository.buscarPorId(id);
+    usuario.nome = dadosDoUsuario.nome;
+    usuario.email = dadosDoUsuario.email;
+    usuario.senha = dadosDoUsuario.senha;
+
+    this.usuarioRepository.atualizar(usuario, usuario);
+
+    return { usuario: new ListaUsuarioDto(usuario.id, usuario.nome), message: "Usuário atualizado com sucesso" }
+  }
+
+  @Delete(':id')
+  async deletarUsuario(@Param('id') id: string) {
+    const usuario = await this.usuarioRepository.buscarPorId(id);
+    this.usuarioRepository.deletar(usuario);
+
+    return { usuario: new ListaUsuarioDto(usuario.id, usuario.nome), message: "Usuário deletado com sucesso" }
   }
 }
