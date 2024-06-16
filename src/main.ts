@@ -17,13 +17,17 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle("Api de uma loja Online")
     .setDescription(
-      "estou criando uma api para aprender a usar o Nest JS com a Alura",
+      "Estou criando uma api para aprender a usar o Nest JS com a Alura",
     )
     .setVersion("1.0")
     .addTag("API")
+    .addBearerAuth(
+      { type: "http", scheme: "bearer", bearerFormat: "JWT" },
+      "access-token",
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document);
+  SwaggerModule.setup("docs", app, document);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(3000);
 }

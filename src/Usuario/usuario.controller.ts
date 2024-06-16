@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Post, Get, Put, Param, Delete } from "@nestjs/common";
 import { CriaUsuarioDto } from "./dto/CriaUsuario.dto";
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UsuarioRepository } from "./usuario.repository";
 import { UsuarioEntity } from "./usuario.entity";
 import { v4 as uuidv4 } from 'uuid';
@@ -9,11 +9,13 @@ import { ListaUsuarioDto } from "./dto/lista-usuario.dto";
 import { updateUsuarioDto } from "./dto/updateUsuario.dto";
 
 @ApiTags('usuarios')
+
 @Controller("usuarios")
 export class UsuarioController {
   constructor(private usuarioRepository: UsuarioRepository) { }
 
   @Post()
+  @ApiOperation({ summary: '-> Cria um usuário' })
   async criaUsuario(@Body() dadosDoUsuario: CriaUsuarioDto) {
     const usuarioEntity = new UsuarioEntity();
 
@@ -26,7 +28,9 @@ export class UsuarioController {
     return { usuario: new ListaUsuarioDto(usuarioEntity.id, usuarioEntity.nome), message: "Usuário criado com sucesso" }
   }
 
+
   @Get()
+  @ApiOperation({ summary: '-> Retorna todos os usuários' })
   async listarUsuario() {
     const usuarioSalvos = await this.usuarioRepository.listar();
 
@@ -37,6 +41,7 @@ export class UsuarioController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: '-> Retorna um usuário' })
   async buscarUsuarioPorId(@Param('id') id: string) {
     const usuario = await this.usuarioRepository.buscarPorId(id);
 
@@ -44,6 +49,7 @@ export class UsuarioController {
   }
 
   @Put('/:id')
+  @ApiOperation({ summary: 'Atualiza um usuário existente' })
   async atualizarUsuario(@Body() dadosDoUsuario: updateUsuarioDto, @Param('id') id: string) {
     const usuario = await this.usuarioRepository.buscarPorId(id);
     usuario.nome = dadosDoUsuario.nome;
@@ -56,6 +62,7 @@ export class UsuarioController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: '-> Deleta um usuário existente' })
   async deletarUsuario(@Param('id') id: string) {
     const usuario = await this.usuarioRepository.buscarPorId(id);
     this.usuarioRepository.deletar(usuario);

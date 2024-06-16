@@ -19,10 +19,23 @@ export class UsuarioRepository {
   }
 
   async atualizar(usuario, novoUsuario) {
+
     this.usuario = this.usuario.map((user) => {
       if (user === usuario) {
         return novoUsuario;
       }
+      if (!novoUsuario) {
+        throw new Error('Usuário não encontrado');
+      }
+
+      Object.entries(novoUsuario).forEach(([key, value]) => {
+        if (key === 'id') {
+          return;
+        }
+
+        user[key] = value;
+      });
+
       return user;
     });
   }
